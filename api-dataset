@@ -1,0 +1,21 @@
+import requests
+import pandas as pd
+
+api_url = "https://api.binance.com/api/v3/ticker/24hr"
+response = requests.get(api_url)
+
+if response.status_code == 200:
+    data = response.json()
+    
+    # Converting the data into a DataFrame and store it as df 
+    df = pd.DataFrame.from_records(data)
+    
+    #store the  CSV file as a name 
+    csv_filename = "binance_data.csv"
+    
+    # Save the DataFrame as a CSV file
+    df.to_csv(csv_filename, index=False)
+    
+    print(f"Data saved to {csv_filename}")
+else:
+    print(f"Failed to fetch data. Status code: {response.status_code}")
