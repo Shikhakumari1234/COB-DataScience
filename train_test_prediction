@@ -1,0 +1,36 @@
+# import libreries
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+from sklearn.impute import SimpleImputer
+
+# uplode the dataset(file you have to store your dataset in csv format)
+tr_data = pd.read_csv("train dataset.csv") #train dataset
+te_data = pd.read_csv("test dataset.csv") #test dataset
+
+# check is there is any null velue in train data set(tr_data)
+if tr_data['y'].isnull().any():
+    # Handle the missing values present in the "y" column of the train dataset
+    imputer = SimpleImputer(strategy='mean') 
+    tr_data['y'] = imputer.fit_transform(tr_data[['y']])
+
+X_train = tr_data['x'].values.reshape(-1, 1) # reshape the demention of the "x" column of the train dataset
+y_train = tr_data['y'].values
+
+X_test = te_data['x'].values.reshape(-1, 1) # resape the dimension of the "x" coluumn of the test dataset
+
+# apply liner model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+#do prediction
+y_pred = model.predict(X_test)
+
+print("Predicted y values for the test data:")
+print(y_pred) # give all the pridicted values of y at the values of x
+
+x_to_predict = [[66]]  # here we want to pridict the value of y at x=66
+predicted_y = model.predict(x_to_predict) 
+
+print(f"Predicted y for x = 66: {predicted_y[0]}")
+
+
