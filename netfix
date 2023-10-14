@@ -1,0 +1,53 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+data = pd.read_csv("dataset - netflix1.csv")
+
+# make different different graphs for analysing netfix dataset
+
+plt.figure(figsize=(10, 6))
+sns.countplot(data=data, x="release_year")
+plt.xticks(rotation=90)
+plt.title("Counts of Releases by Year")
+plt.show()
+
+content_types = data["type"].value_counts()
+plt.figure()
+plt.pie(content_types, labels=content_types.index, autopct='%1.1f%%')
+plt.title("Content Types: Movies vs. TV Shows")
+plt.show()
+
+plt.figure()
+sns.countplot(data=data, x="rating", order=data["rating"].value_counts().index)
+plt.xticks(rotation=45)
+plt.title("Distribution of Ratings")
+plt.show()
+
+plt.figure(figsize=(12, 6))
+sns.countplot(data=data, x="country", order=data["country"].value_counts().index)
+plt.xticks(rotation=90)
+plt.title("Country-wise Distribution of Content")
+plt.show()
+
+plt.figure(figsize=(12, 6))
+sns.countplot(data=data, x="country", order=data["country"].value_counts().index)
+plt.xticks(rotation=90)
+plt.title("Country-wise Distribution of Content")
+plt.show()
+
+data["date_added"] = pd.to_datetime(data["date_added"])
+data["month_added"] = data["date_added"].dt.month
+plt.figure()
+sns.countplot(data=data, x="month_added")
+plt.title("Release Month Distribution")
+plt.xlabel("Month")
+plt.show()
+
+plt.figure()
+sns.countplot(data=data, x="rating", hue="type")
+plt.xticks(rotation=45)
+plt.title("Rating Distribution by Content Type")
+plt.show()
+
+
